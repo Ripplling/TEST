@@ -58,15 +58,6 @@ public class Jdbc {
 
     }
 
-    public static int insert(String table,String[] keys,Object[] values) throws SQLException {
-        String sql = "INSERT INTO ?(?) VALUES (?)";
-        ConnectManager manager = new ConnectManager();
-        Connection conn = manager.getConnection();
-        PreparedStatement pre = conn.prepareStatement(sql);
-        pre.setString(1,table);
-        return 0;
-
-    }
 
 
 }
