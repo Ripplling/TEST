@@ -35,6 +35,5 @@ public class Main {
         //打印连接归还后释放多余连接后的集合
        //pool.releaseConnection();
         System.out.println(Connectpool.arr);
-        System.out.println("hello git");
     }
 }
