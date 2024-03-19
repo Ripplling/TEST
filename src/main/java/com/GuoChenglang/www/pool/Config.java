@@ -8,7 +8,7 @@ public class Config {
     //最大链接个数
     private int max = 5;
     //url username password
-    private String url = "jdbc:mysql:///school";
+    private String url = "jdbc:mysql:///hospital";
     private String username = "root";
     private String password = "123456";
 

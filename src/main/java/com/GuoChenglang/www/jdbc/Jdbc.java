@@ -57,6 +57,22 @@ public class Jdbc {
         }
 
     }
+    public static int executeUpdate(String sql) throws SQLException {
+        ConnectManager pool = new ConnectManager();
+        Connection conn = pool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement pre = conn.prepareStatement(sql);
+        int line= pre.executeUpdate();
+        pool.returnConnection(conn);
+        pool.releaseAll(null,pre,resultSet);
+        return line;
+    }
+    public static ResultSet executeQuery(String sql) throws SQLException {
+        ConnectManager pool = new ConnectManager();
+        Connection conn = pool.getConnection();
+        PreparedStatement pre = conn.prepareStatement(sql);
+        return pre.executeQuery();
+    }
 
 
 
