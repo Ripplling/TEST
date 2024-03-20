@@ -1,4 +1,4 @@
-package com.GuoChenglang.www.pool;
+package dao;
 
 
 //连接池的配置类

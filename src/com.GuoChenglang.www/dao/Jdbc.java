@@ -1,11 +1,8 @@
-package com.GuoChenglang.www.jdbc;
-
-import com.GuoChenglang.www.pool.Config;
-import com.GuoChenglang.www.pool.ConnectManager;
+package dao;
 
 import java.sql.*;
 
-//JDBC方法的封装
+//JDBC方法的简单封装
 public class Jdbc {
     //私有化构造方法
     private Jdbc() {
@@ -57,23 +54,26 @@ public class Jdbc {
         }
 
     }
+
     public static int executeUpdate(String sql) throws SQLException {
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement pre = conn.prepareStatement(sql);
-        int line= pre.executeUpdate();
+        int line = pre.executeUpdate();
         pool.returnConnection(conn);
-        pool.releaseAll(null,pre,resultSet);
+        pool.releaseAll(null, pre, resultSet);
         return line;
     }
+
     public static ResultSet executeQuery(String sql) throws SQLException {
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(sql);
-        return pre.executeQuery();
+        ResultSet resultSet = pre.executeQuery();
+        pool.returnConnection(conn);
+        return resultSet;
     }
-
 
 
 }

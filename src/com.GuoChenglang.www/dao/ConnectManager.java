@@ -1,4 +1,4 @@
-package com.GuoChenglang.www.pool;
+package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 //Connectpool的实现类，避免暴露底层
 public class ConnectManager implements Connectutil {
-    private final Connectpool pool = new Connectpool();
+    private final ConnectPool pool = new ConnectPool();
 
     public ConnectManager() {
     }

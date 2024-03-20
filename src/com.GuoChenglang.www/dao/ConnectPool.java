@@ -1,18 +1,15 @@
-package com.GuoChenglang.www.pool;
-
-import com.GuoChenglang.www.jdbc.Jdbc;
+package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 //连接池类
-public class Connectpool implements Connectutil {
+public class ConnectPool implements Connectutil {
     //构造方法,创建对象时初始化连接池
-    public Connectpool() {
+    public ConnectPool() {
         init(config);
     }
 
@@ -43,7 +40,7 @@ public class Connectpool implements Connectutil {
     //获取连接池链接的方法
     @Override
     public Connection getConnection() {
-        synchronized (Connectpool.class) {
+        synchronized (ConnectPool.class) {
             //连接数小于初始的情况
             if (connection < config.getInit()) {
                 connection++;
@@ -67,7 +64,7 @@ public class Connectpool implements Connectutil {
     @Override
     //归还连接到连接池
     public void returnConnection(Connection conn) throws SQLException {
-        synchronized (Connectpool.class) {
+        synchronized (ConnectPool.class) {
             if (conn != null && !conn.isClosed()) {
                 arr.add(conn);
                 System.out.println("归还成功");
@@ -82,7 +79,7 @@ public class Connectpool implements Connectutil {
     //释放多余的链接
     @Override
     public void releaseConnection() {
-        synchronized (Connectpool.class) {
+        synchronized (ConnectPool.class) {
             while (arr.size() > config.getInit()) {
                 Connection conn = arr.remove(config.getInit());
                 Jdbc.releaseAll(conn, null, null);

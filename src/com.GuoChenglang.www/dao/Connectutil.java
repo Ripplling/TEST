@@ -1,4 +1,4 @@
-package com.GuoChenglang.www.pool;
+package dao;
 
 
 import java.sql.Connection;
