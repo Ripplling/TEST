@@ -29,18 +29,5 @@ public class User {
 
     }
 
-    public void signIn() throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入注册的账号");
-        String account = sc.nextLine();
-        System.out.println("请输入注册的密码");
-        String password = sc.nextLine();
-        String secondPassword = Encryption.encryption(password);
-        System.out.println("请输入你的姓名");
-        String name = sc.nextLine();
-        System.out.println("请输入你的学号");
-        String id = sc.nextLine();
-        Jdbc.executeUpdate("INSERT INTO user(username,password,name,id,istrue) VALUES('"+account+"','"+secondPassword+"','"+name+"','"+id+"',2) ");
-        System.out.println("注册已提交，请等待管理员审核");
-    }
+
 }

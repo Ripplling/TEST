@@ -1,10 +1,12 @@
 package controller;
 
 import dao.Jdbc;
+import dao.Jdbcutil;
 import util.Determind;
 import util.Encryption;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class SignIn {
@@ -33,7 +35,14 @@ public class SignIn {
             }
             System.out.println("输入学号的格式错误");
         }
-        Jdbc.executeUpdate("INSERT INTO user(username,password,name,id,istrue) VALUES('" + account + "','" + secondPassword + "','" + name + "','" + id + "',2) ");
+        //Jdbc.executeUpdate("INSERT INTO user(username,password,name,id,istrue) VALUES('" + account + "','" + secondPassword + "','" + name + "','" + id + "',2) ");
+        LinkedHashMap<String,Object> map =new LinkedHashMap<>();
+        map.put("username",account);
+        map.put("password",secondPassword);
+        map.put("name",name);
+        map.put("id",id);
+        map.put("istrue",2);
+        Jdbcutil.insert("user",map);
         System.out.println("注册已提交，请等待管理员审核");
     }
 }

@@ -1,3 +1,4 @@
+import controller.SignIn;
 import dao.ConnectManager;
 import dao.Jdbc;
 import dao.Jdbcutil;
@@ -7,10 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class test {
     public static void main(String[] args) throws SQLException, ParseException {
@@ -22,12 +20,14 @@ public class test {
         Jdbcutil.insert(map);*/
         //String sql = "INSERT INTO doctor(name,room,istrue) VALUES('小明','001',1)";
 
-        //Jdbcutil.insert("小明","001");
-        LinkedHashMap<String, Object> map =new LinkedHashMap<>();
-        map.size();
-        map.put("username","12345");
-        map.put("istrue",4);
-        Jdbcutil.update("user",map);
+        ArrayList<String> yw = new ArrayList<>();
+        yw.add("name");
+        yw.add("room");
+        yw.add("istrue");
+        LinkedHashMap<String,Object> map = new LinkedHashMap<>();
+        map.put("room","001");
+        //Jdbcutil.select("doctor",yw,map);
+        System.out.println(Jdbcutil.select("doctor",yw,map));
 
     }
 }
