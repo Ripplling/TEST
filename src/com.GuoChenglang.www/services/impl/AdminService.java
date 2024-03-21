@@ -45,4 +45,12 @@ public class AdminService implements AdminControl {
         Jdbcutil.insert("doctor", comfort);
     }
 
+    @Override
+    public void inserDocDate(String date, String room) throws SQLException {
+        LinkedHashMap<String,Object> comfort = new LinkedHashMap<>();
+        comfort.put("date",date);
+        comfort.put("room",room);
+        Jdbcutil.insert("date",comfort);
+    }
+
 }

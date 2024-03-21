@@ -17,7 +17,7 @@ public class test {
         AdminService controller = new AdminService();
         //controller.acceptStudent("3214");
         //SignIn.signIn();
-        controller.insertDoc("xiaoming","111");
+        controller.inserDocDate("1月22日 13：23","110");
 
     }
 }
