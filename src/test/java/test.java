@@ -1,16 +1,8 @@
 import controller.LogIn;
-import controller.SignIn;
-import dao.ConnectManager;
-import dao.Jdbc;
-import dao.Jdbcutil;
-import services.impl.AdminController;
+import services.impl.AdminService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class test {
     public static void main(String[] args) throws SQLException, ParseException {
@@ -22,12 +14,10 @@ public class test {
         Jdbcutil.insert(map);*/
         //String sql = "INSERT INTO doctor(name,room,istrue) VALUES('小明','001',1)";
         //AdminController.temporarily();
-        AdminController controller = new AdminController();
+        AdminService controller = new AdminService();
         //controller.acceptStudent("3214");
         //SignIn.signIn();
-        AdminController admin = new AdminController();
-        admin.acceptStudent("3123004444");
-        System.out.println(LogIn.logIn());
+        controller.insertDoc("xiaoming","111");
 
     }
 }
