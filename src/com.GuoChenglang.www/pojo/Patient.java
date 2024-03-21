@@ -4,17 +4,22 @@ import java.sql.Date;
 
 public class Patient {
     private String name;
+    private String ID;
     private String yourdoc;
     private Date date;
     private String room;
+    private int complete;
+
 
     @Override
     public String toString() {
         return "Patient{" +
                 "name='" + name + '\'' +
+                ", ID='" + ID + '\'' +
                 ", yourdoc='" + yourdoc + '\'' +
                 ", date=" + date +
                 ", room='" + room + '\'' +
+                ", complete=" + complete +
                 '}';
     }
 
@@ -24,6 +29,14 @@ public class Patient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getYourdoc() {
@@ -50,11 +63,21 @@ public class Patient {
         this.room = room;
     }
 
-    public Patient(String name, String yourdoc, Date date, String room) {
+    public int getComplete() {
+        return complete;
+    }
+
+    public void setComplete(int complete) {
+        this.complete = complete;
+    }
+
+    public Patient(String name, String ID, String yourdoc, Date date, String room, int complete) {
         this.name = name;
+        this.ID = ID;
         this.yourdoc = yourdoc;
         this.date = date;
         this.room = room;
+        this.complete = complete;
     }
 
     public Patient() {
