@@ -2,6 +2,7 @@ import controller.SignIn;
 import dao.ConnectManager;
 import dao.Jdbc;
 import dao.Jdbcutil;
+import services.impl.AdminController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,15 +20,12 @@ public class test {
         map.put("istrue","1");
         Jdbcutil.insert(map);*/
         //String sql = "INSERT INTO doctor(name,room,istrue) VALUES('小明','001',1)";
-
-        ArrayList<String> yw = new ArrayList<>();
-        yw.add("name");
-        yw.add("room");
-        yw.add("istrue");
-        LinkedHashMap<String,Object> map = new LinkedHashMap<>();
-        map.put("room","001");
-        //Jdbcutil.select("doctor",yw,map);
-        System.out.println(Jdbcutil.select("doctor",yw,map));
+        //AdminController.temporarily();
+        AdminController controller = new AdminController();
+        //controller.acceptStudent("3214");
+        Connection conn = new ConnectManager().getConnection();
+        conn.setAutoCommit(false);
+        controller.acceptStudent("3214");
 
     }
 }
