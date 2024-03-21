@@ -128,14 +128,14 @@ public class Jdbcutil {
         }
         //System.out.println(sql);
         /*
-        * 到达集合长度前，添加字符“'key' = ? && ”
-        * 到达集合长度后，添加字符“'key '=?)”
-        * */
+         * 到达集合长度前，添加字符“'key' = ? && ”
+         * 到达集合长度后，添加字符“'key '=?)”
+         * */
         Set<String> condit = condition.keySet();
         length = condition.size();
         count = 1;
         for (String s : condit) {
-            if(count == length){
+            if (count == length) {
                 sql.append(s).append(" = ?)");
                 break;
             }
@@ -157,7 +157,7 @@ public class Jdbcutil {
         }
         for (String s : condit) {
             Object value = condition.get(s);
-            pre.setObject(count,value);
+            pre.setObject(count, value);
             count++;
         }
         //System.out.println(sql);

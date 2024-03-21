@@ -33,21 +33,22 @@ public class AdminController implements AdminControl {
     @Override
     public void acceptStudent(String id) throws SQLException {
         LinkedHashMap<String, Object> set = new LinkedHashMap<>();
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
         //同意注册
         set.put("istrue", 1);
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
         condition.put("id", id);
-        conn.setAutoCommit(false);
-        conn.setAutoCommit(false);
         Jdbcutil.update("user", set, condition);
 
     }
 
+    //不同意非法的学生
     @Override
-    public void submit() {
-
+    public void rejectStudent(String id) throws SQLException {
+        LinkedHashMap<String,Object> condition = new LinkedHashMap<>();
+        condition.put("istrue",2);
+        condition.put("id",id);
+        Jdbcutil.delect("user",condition);
     }
+
 }
