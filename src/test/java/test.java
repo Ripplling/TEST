@@ -1,3 +1,4 @@
+import controller.LogIn;
 import controller.SignIn;
 import dao.ConnectManager;
 import dao.Jdbc;
@@ -23,9 +24,10 @@ public class test {
         //AdminController.temporarily();
         AdminController controller = new AdminController();
         //controller.acceptStudent("3214");
-        Connection conn = new ConnectManager().getConnection();
-        conn.setAutoCommit(false);
-        controller.acceptStudent("3214");
+        //SignIn.signIn();
+        AdminController admin = new AdminController();
+        admin.acceptStudent("3123004444");
+        System.out.println(LogIn.logIn());
 
     }
 }
