@@ -10,13 +10,13 @@ import java.util.*;
 //Jdbc的详细封装(insert,update,delete,select)（不是很会a）
 public class Jdbcutil {
     //插入医生的信息
-    public static int insert(String table, LinkedHashMap<String, Object> map) throws SQLException {
+    public static int insert(String table, LinkedHashMap<String, Object> comfort) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         //插入目标表
         sql.append(table).append("(");
-        Set<String> keys = map.keySet();
-        int length = map.size();
+        Set<String> keys = comfort.keySet();
+        int length = comfort.size();
         int count = 1;
         /*
          * 在计数器没有到达集合长度时，添加字段“'key' ,”
@@ -48,7 +48,7 @@ public class Jdbcutil {
         count = 1;
         //通过键值对对占位符进行赋值
         for (String key : keys) {
-            Object value = map.get(key);
+            Object value = comfort.get(key);
             pre.setObject(count, value);
             count++;
         }
@@ -62,12 +62,12 @@ public class Jdbcutil {
     }
 
 
-    public static int delect(String table, LinkedHashMap<String, Object> map) throws SQLException {
+    public static int delect(String table, LinkedHashMap<String, Object> condition) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("DELETE FROM ");
         sql.append(table).append(" WHERE (");
-        Set<String> keys = map.keySet();
-        int length = map.size();
+        Set<String> keys = condition.keySet();
+        int length = condition.size();
         int count = 1;
         /*
          * 在计数器没有到达长度时，添加字符“'key'=? &&”
@@ -90,7 +90,7 @@ public class Jdbcutil {
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
         //通过键值对对占位符进行赋值
         for (String key : keys) {
-            Object value = map.get(key);
+            Object value = condition.get(key);
             pre.setObject(count, value);
             count++;
         }
@@ -171,7 +171,7 @@ public class Jdbcutil {
     }
 
 
-    public static ArrayList<LinkedHashMap<String, Object>> select(String table, ArrayList<String> select, LinkedHashMap<String, Object> map) throws SQLException {
+    public static ArrayList<LinkedHashMap<String, Object>> select(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) throws SQLException {
         StringBuilder sql = new StringBuilder("SELECT ");
         //sql语句的构建
         int index = 0;
@@ -182,8 +182,8 @@ public class Jdbcutil {
         sql.append(select.get(index)).append(" FROM ");
         //sql语句占位符的构建
         sql.append(table).append(" WHERE (");
-        Set<String> keys = map.keySet();
-        int length = map.size();
+        Set<String> keys = condition.keySet();
+        int length = condition.size();
         int count = 1;
         for (String key : keys) {
             if (count == length) {
@@ -202,7 +202,7 @@ public class Jdbcutil {
         count = 1;
         //对占位符进行赋值
         for (String key : keys) {
-            Object value = map.get(key);
+            Object value = condition.get(key);
             pre.setObject(count, value);
             count++;
         }

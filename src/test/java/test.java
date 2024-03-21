@@ -12,7 +12,7 @@ public class test {
         map.put("room","110");
         map.put("istrue","1");
         Jdbcutil.insert(map);*/
-        //String sql = "INSERT INTO doctor(name,room,istrue) VALUES('小明','001',1)";
+        //String sql = "INSERT INTO doctor(name,room,istrue) VALUES('小明','001',1)                                          ";
         //AdminController.temporarily();
         AdminService controller = new AdminService();
         //controller.acceptStudent("3214");
