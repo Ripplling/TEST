@@ -43,6 +43,7 @@ public class Jdbcutil {
         //System.out.println(sql);
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
+        conn.setAutoCommit(false);
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
         count = 1;
         //通过键值对对占位符进行赋值
@@ -52,6 +53,9 @@ public class Jdbcutil {
             count++;
         }
         int num = pre.executeUpdate();
+        //开启事务
+        Affair.startAffair(conn);
+        //回收资源
         pool.returnConnection(conn);
         pool.releaseAll(null, pre, null);
         return num;
@@ -82,6 +86,7 @@ public class Jdbcutil {
         count = 1;
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
+        conn.setAutoCommit(false);
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
         //通过键值对对占位符进行赋值
         for (String key : keys) {
@@ -91,6 +96,9 @@ public class Jdbcutil {
         }
         //回收资源
         int num = pre.executeUpdate();
+        //开启事务
+        Affair.startAffair(conn);
+        //回收资源
         pool.returnConnection(conn);
         pool.releaseAll(null, pre, null);
         return num;
@@ -154,9 +162,10 @@ public class Jdbcutil {
         }
         //System.out.println(sql);
         int num = pre.executeUpdate();
+        //开启事务
+        Affair.startAffair(conn);
         //回收资源
         pool.returnConnection(conn);
-        Affair.startAffair(conn);
         pool.releaseAll(null, pre, null);
         return num;
     }

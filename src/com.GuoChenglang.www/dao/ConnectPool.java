@@ -69,9 +69,9 @@ public class ConnectPool implements Connectutil {
                 arr.add(conn);
                 System.out.println("归还成功");
                 connection--;
-                releaseConnection();
+                //releaseConnection();
             }
-
+            releaseConnection();
         }
 
     }

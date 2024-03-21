@@ -10,11 +10,11 @@ public class Affair {
         //System.out.println("你同意吗");
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("你同意吗 Y/N");
+            System.out.println("你确定吗 Y/N");
             sc = new Scanner(System.in);
             String keyhit = sc.nextLine();
             if (keyhit.equals("Y") || keyhit.equals("y")) {
-                System.out.println("同意成功");
+                System.out.println("确定");
                 conn.commit();
                 break;
             } else if (keyhit.equals("N") || keyhit.equals("n")) {
