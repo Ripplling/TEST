@@ -25,13 +25,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
         condition.put("id", id);
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
-        Jdbcutil.update("user", set, condition);
-        Affair.startAffair(conn);
-        //Affair.startAffair(conn);
-        pool.returnConnection(conn);
+        Jdbcutil.update("user", set, condition,true);
     }
 
     //不同意非法的学生
@@ -40,12 +34,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", 2);
         condition.put("id", id);
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
-        Jdbcutil.delect("user", condition);
-        Affair.startAffair(conn);
-        pool.returnConnection(conn);
+        Jdbcutil.delect("user", condition,true);
     }
 
     //插入医生信息
@@ -55,12 +44,7 @@ public class AdminService implements AdminControl {
         comfort.put("name", name);
         comfort.put("room", room);
         comfort.put("isfree", 1);
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
-        Jdbcutil.insert("doctor", comfort);
-        Affair.startAffair(conn);
-        pool.returnConnection(conn);
+        Jdbcutil.insert("doctor", comfort,true);
     }
 
     //插入时间段
@@ -69,12 +53,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("date", date);
         comfort.put("room", room);
-        ConnectManager pool = new ConnectManager();
-        Connection conn = new ConnectManager().getConnection();
-        conn.setAutoCommit(false);
-        Jdbcutil.insert("date", comfort);
-        Affair.startAffair(conn);
-        pool.returnConnection(conn);
+        Jdbcutil.insert("date", comfort,true);
     }
 
 }
