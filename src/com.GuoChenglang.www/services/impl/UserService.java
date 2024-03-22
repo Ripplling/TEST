@@ -32,15 +32,15 @@ public class UserService implements UserControl {
         comfort.put("room", room);
         comfort.put("complete", 0);
         comfort.put("date", date);
-        Jdbcutil.insert(conn, "patient", comfort);
+        Jdbcutil.insert("patient", comfort);
         comfort2.put("room", room);
-        Jdbcutil.delect(conn, "date", comfort2);
+        Jdbcutil.delect("date", comfort2);
         if (!DocIsFree.docIsFree(room)) {
             LinkedHashMap<String, Object> set = new LinkedHashMap<>();
             LinkedHashMap<String, Object> docRoom = new LinkedHashMap<>();
             set.put("isfree", 0);
             docRoom.put("room", room);
-            Jdbcutil.update(conn, "doctor", set, docRoom);
+            Jdbcutil.update( "doctor", set, docRoom);
         }
         Affair.startAffair(conn);
         pool.returnConnection(conn);

@@ -55,7 +55,7 @@ public class SignIn {
         map.put("istrue", 2);
         Connection conn = new ConnectManager().getConnection();
         conn.setAutoCommit(false);
-        Jdbcutil.insert(conn, "user", map);
+        Jdbcutil.insert("user", map);
         Affair.startAffair(conn);
         System.out.println("注册已提交，请等待管理员审核");
     }

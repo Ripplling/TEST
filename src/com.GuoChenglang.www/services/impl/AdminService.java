@@ -28,7 +28,7 @@ public class AdminService implements AdminControl {
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         conn.setAutoCommit(false);
-        Jdbcutil.update(conn, "user", set, condition);
+        Jdbcutil.update("user", set, condition);
         Affair.startAffair(conn);
         //Affair.startAffair(conn);
         pool.returnConnection(conn);
@@ -43,7 +43,7 @@ public class AdminService implements AdminControl {
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         conn.setAutoCommit(false);
-        Jdbcutil.delect(conn, "user", condition);
+        Jdbcutil.delect("user", condition);
         Affair.startAffair(conn);
         pool.returnConnection(conn);
     }
@@ -58,7 +58,7 @@ public class AdminService implements AdminControl {
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         conn.setAutoCommit(false);
-        Jdbcutil.insert(conn, "doctor", comfort);
+        Jdbcutil.insert("doctor", comfort);
         Affair.startAffair(conn);
         pool.returnConnection(conn);
     }
@@ -72,7 +72,7 @@ public class AdminService implements AdminControl {
         ConnectManager pool = new ConnectManager();
         Connection conn = new ConnectManager().getConnection();
         conn.setAutoCommit(false);
-        Jdbcutil.insert(conn, "date", comfort);
+        Jdbcutil.insert("date", comfort);
         Affair.startAffair(conn);
         pool.returnConnection(conn);
     }

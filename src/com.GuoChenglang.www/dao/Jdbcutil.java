@@ -10,39 +10,14 @@ import java.util.*;
 //Jdbc的详细封装(insert,update,delete,select)（不是很会a）
 public class Jdbcutil {
     //插入医生的信息
-    public static int insert(Connection conn, String table, LinkedHashMap<String, Object> comfort) throws SQLException {
-        //构建sql语句
-        StringBuilder sql = new StringBuilder("INSERT INTO ");
-        //插入目标表
-        sql.append(table).append("(");
-        Set<String> keys = comfort.keySet();
-        int length = comfort.size();
-        int count = 1;
-        /*
-         * 在计数器没有到达集合长度时，添加字段“'key' ,”
-         * 在计数器到达集合长度后,添加字段“'key' ) VALUES (”
-         *
-         *
-         * */
-        for (String key : keys) {
-            if (count == length) {
-                sql.append(key).append(") VALUES(");
-                break;
-            }
-            sql.append(key).append(",");
-            count++;
-        }
-        //通过集合长度判断设定多少个占位符'?'
-        for (int i = 1; i <= count; i++) {
-            if (i == count) {
-                sql.append("?)");
-                break;
-            }
-            sql.append("?,");
-        }
+    public static int insert(String table, LinkedHashMap<String, Object> comfort) throws SQLException {
+        String sql = SqlBuilder.insertSql(table, comfort);
         //System.out.println(sql);
+        ConnectManager pool = new ConnectManager();
+        Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
-        count = 1;
+        int count = 1;
+        Set<String> keys = comfort.keySet();
         //通过键值对对占位符进行赋值
         for (String key : keys) {
             Object value = comfort.get(key);
@@ -50,33 +25,20 @@ public class Jdbcutil {
             count++;
         }
         int num = pre.executeUpdate();
+        pool.returnConnection(conn);
+        pool.releaseAll(null,pre,null);
         return num;
     }
 
 
-    public static int delect(Connection conn, String table, LinkedHashMap<String, Object> condition) throws SQLException {
-        //构建sql语句
-        StringBuilder sql = new StringBuilder("DELETE FROM ");
-        sql.append(table).append(" WHERE (");
-        Set<String> keys = condition.keySet();
-        int length = condition.size();
-        int count = 1;
-        /*
-         * 在计数器没有到达长度时，添加字符“'key'=? &&”
-         * 在计数器到达长度后，添加字符“'key' = ? )”
-         *
-         * */
-        for (String key : keys) {
-            if (count == length) {
-                sql.append(key).append("= ?)");
-                break;
-            }
-            sql.append(key).append("= ? && ");
-            count++;
-        }
+    public static int delect(String table, LinkedHashMap<String, Object> condition) throws SQLException {
+        String sql = SqlBuilder.deleteSql(table, condition);
         System.out.println(sql);
-        count = 1;
+        int count = 1;
+        ConnectManager pool = new ConnectManager();
+        Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
+        Set<String> keys = condition.keySet();
         //通过键值对对占位符进行赋值
         for (String key : keys) {
             Object value = condition.get(key);
@@ -85,50 +47,20 @@ public class Jdbcutil {
         }
         //回收资源
         int num = pre.executeUpdate();
+        pool.returnConnection(conn);
+        pool.releaseAll(null,pre,null);
         return num;
     }
 
     //自定义sql语句，通过键值对应来赋值
-    public static int update(Connection conn, String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) throws SQLException {
-        //构建sql语句
-        StringBuilder sql = new StringBuilder("UPDATE ");
-        sql.append(table).append(" SET ");
-        Set<String> keys = set.keySet();
-        int length = set.size();
-        int count = 1;
-        /*
-            在到达集合长度前，添加字符“'key '= ?,”
-            到达集合长度后，添加"'key '=? WHERE ("
-         * */
-        for (String key : keys) {
-
-            if (count == length) {
-                sql.append(key).append(" =? ").append("WHERE (");
-                break;
-            }
-
-            sql.append(key).append(" = ?, ");
-            count++;
-        }
-        //System.out.println(sql);
-        /*
-         * 到达集合长度前，添加字符“'key' = ? && ”
-         * 到达集合长度后，添加字符“'key '=?)”
-         * */
-        Set<String> condit = condition.keySet();
-        length = condition.size();
-        count = 1;
-        for (String s : condit) {
-            if (count == length) {
-                sql.append(s).append(" = ?)");
-                break;
-            }
-            sql.append(s).append(" = ? && ");
-            count++;
-        }
-        //System.out.println(sql);
+    public static int update(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) throws SQLException {
+        String sql = SqlBuilder.updateSql(table, set, condition);
+        ConnectManager pool = new ConnectManager();
+        Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(sql.toString());
-        count = 1;
+        int count = 1;
+        Set<String> keys = set.keySet();
+        Set<String> condit = condition.keySet();
         //对占位符进行赋值
         for (String key : keys) {
             Object value = set.get(key);
@@ -142,39 +74,23 @@ public class Jdbcutil {
         }
         //System.out.println(sql);
         int num = pre.executeUpdate();
+        pool.returnConnection(conn);
+        pool.releaseAll(null,pre,null);
         return num;
     }
 
 
     public static ArrayList<LinkedHashMap<String, Object>> select(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) throws SQLException {
-        StringBuilder sql = new StringBuilder("SELECT ");
-        //sql语句的构建
-        int index = 0;
-        while (index < select.size() - 1) {
-            sql.append(select.get(index)).append(",");
-            index++;
-        }
-        sql.append(select.get(index)).append(" FROM ");
-        //sql语句占位符的构建
-        sql.append(table).append(" WHERE (");
-        Set<String> keys = condition.keySet();
-        int length = condition.size();
-        int count = 1;
-        for (String key : keys) {
-            if (count == length) {
-                sql.append(key).append("= ?)");
-                break;
-            }
-            sql.append(key).append("= ? && ");
-            count++;
-        }
+        String sql = SqlBuilder.selectSql(table, select, condition);
         //打印sql语句查验
         //System.out.println(sql);
         //从连接池获取连接
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
-        count = 1;
+        int count = 1;
+        int index = 0;
+        Set<String> keys = condition.keySet();
         //对占位符进行赋值
         for (String key : keys) {
             Object value = condition.get(key);
