@@ -1,13 +1,11 @@
 package controller;
 
-import dao.Affair;
-import dao.ConnectManager;
-import dao.Jdbc;
-import dao.Jdbcutil;
+import dao.*;
 import util.Determind;
 import util.Encryption;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -53,10 +51,9 @@ public class SignIn {
         map.put("name", name);
         map.put("id", id);
         map.put("istrue", 2);
-        Connection conn = new ConnectManager().getConnection();
-        conn.setAutoCommit(false);
-        Jdbcutil.insert("user", map);
-        Affair.startAffair(conn);
+        Jdbcutil.insert("user",map,true);
+
+
         System.out.println("注册已提交，请等待管理员审核");
     }
 }

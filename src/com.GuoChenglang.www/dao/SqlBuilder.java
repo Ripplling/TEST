@@ -1,12 +1,14 @@
 package dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 public class SqlBuilder {
-    public static String insertSql(String table, LinkedHashMap<String, Object> comfort) {
+    public static String insertSql(String table, LinkedHashMap<String, Object> comfort) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         //插入目标表
@@ -36,7 +38,10 @@ public class SqlBuilder {
             }
             sql.append("?,");
         }
+        count = 1;
+        keys = comfort.keySet();
         return String.valueOf(sql);
+
     }
 
     public static String deleteSql(String table, LinkedHashMap<String, Object> condition) {
