@@ -1,10 +1,13 @@
 package controller;
 
+import dao.Affair;
+import dao.ConnectManager;
 import dao.Jdbc;
 import dao.Jdbcutil;
 import util.Determind;
 import util.Encryption;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
@@ -25,10 +28,9 @@ public class SignIn {
         while (true) {
             System.out.println("请输入注册的密码");
             password = sc.nextLine();
-            if(password != null){
+            if (password != null) {
                 break;
-            }
-            else {
+            } else {
                 System.out.println("非法密码");
             }
         }
@@ -51,7 +53,10 @@ public class SignIn {
         map.put("name", name);
         map.put("id", id);
         map.put("istrue", 2);
-        Jdbcutil.insert("user", map);
+        Connection conn = new ConnectManager().getConnection();
+        conn.setAutoCommit(false);
+        Jdbcutil.insert(conn, "user", map);
+        Affair.startAffair(conn);
         System.out.println("注册已提交，请等待管理员审核");
     }
 }

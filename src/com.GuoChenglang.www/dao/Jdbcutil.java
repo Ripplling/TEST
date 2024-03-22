@@ -10,7 +10,7 @@ import java.util.*;
 //Jdbc的详细封装(insert,update,delete,select)（不是很会a）
 public class Jdbcutil {
     //插入医生的信息
-    public static int insert(String table, LinkedHashMap<String, Object> comfort) throws SQLException {
+    public static int insert(Connection conn, String table, LinkedHashMap<String, Object> comfort) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         //插入目标表
@@ -41,9 +41,6 @@ public class Jdbcutil {
             sql.append("?,");
         }
         //System.out.println(sql);
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
         count = 1;
         //通过键值对对占位符进行赋值
@@ -53,16 +50,11 @@ public class Jdbcutil {
             count++;
         }
         int num = pre.executeUpdate();
-        //开启事务
-        Affair.startAffair(conn);
-        //回收资源
-        pool.returnConnection(conn);
-        pool.releaseAll(null, pre, null);
         return num;
     }
 
 
-    public static int delect(String table, LinkedHashMap<String, Object> condition) throws SQLException {
+    public static int delect(Connection conn, String table, LinkedHashMap<String, Object> condition) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("DELETE FROM ");
         sql.append(table).append(" WHERE (");
@@ -84,9 +76,6 @@ public class Jdbcutil {
         }
         System.out.println(sql);
         count = 1;
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
         PreparedStatement pre = conn.prepareStatement(String.valueOf(sql));
         //通过键值对对占位符进行赋值
         for (String key : keys) {
@@ -96,16 +85,11 @@ public class Jdbcutil {
         }
         //回收资源
         int num = pre.executeUpdate();
-        //开启事务
-        Affair.startAffair(conn);
-        //回收资源
-        pool.returnConnection(conn);
-        pool.releaseAll(null, pre, null);
         return num;
     }
 
     //自定义sql语句，通过键值对应来赋值
-    public static int update(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) throws SQLException {
+    public static int update(Connection conn, String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) throws SQLException {
         //构建sql语句
         StringBuilder sql = new StringBuilder("UPDATE ");
         sql.append(table).append(" SET ");
@@ -143,10 +127,6 @@ public class Jdbcutil {
             count++;
         }
         //System.out.println(sql);
-        //从连接池获取连接
-        ConnectManager pool = new ConnectManager();
-        Connection conn = pool.getConnection();
-        conn.setAutoCommit(false);
         PreparedStatement pre = conn.prepareStatement(sql.toString());
         count = 1;
         //对占位符进行赋值
@@ -162,11 +142,6 @@ public class Jdbcutil {
         }
         //System.out.println(sql);
         int num = pre.executeUpdate();
-        //开启事务
-        Affair.startAffair(conn);
-        //回收资源
-        pool.returnConnection(conn);
-        pool.releaseAll(null, pre, null);
         return num;
     }
 
@@ -219,10 +194,8 @@ public class Jdbcutil {
             //将map集合储存进结果中
             result.add(newMap);
         }
-        //归还连接
         pool.returnConnection(conn);
-        //释放资源
-        pool.releaseAll(null, pre, resultSet);
+        pool.releaseAll(conn, pre, resultSet);
         return result;
 
     }

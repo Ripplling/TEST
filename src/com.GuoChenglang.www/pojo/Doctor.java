@@ -3,14 +3,14 @@ package pojo;
 public class Doctor {
     private String name;
     private String room;
-    private int istrue;
+    private int isfree;
 
     @Override
     public String toString() {
         return "Doctor{" +
                 "name='" + name + '\'' +
                 ", room='" + room + '\'' +
-                ", istrue=" + istrue +
+                ", isfreee=" + isfree +
                 '}';
     }
 
@@ -31,11 +31,11 @@ public class Doctor {
     }
 
     public int getIstrue() {
-        return istrue;
+        return isfree;
     }
 
     public void setIstrue(int istrue) {
-        this.istrue = istrue;
+        this.isfree = istrue;
     }
 
     public Doctor() {
@@ -44,6 +44,6 @@ public class Doctor {
     public Doctor(String name, String room, int istrue) {
         this.name = name;
         this.room = room;
-        this.istrue = istrue;
+        this.isfree = istrue;
     }
 }
