@@ -62,6 +62,23 @@ public class UserService implements UserControl {
             docRoom.put("room", room);
             jdbc.update("doctor", set, docRoom, false);
         }
-        System.out.println("选择成功");
+        System.out.println("预约成功");
+    }
+
+    //该预约时间段是否存在
+    public boolean isDate(String room, String date) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
+        ArrayList<String> select = new ArrayList<>();
+        select.add("date");
+        select.add("room");
+        LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
+        condition.put("room", room);
+        condition.put("date", date);
+        ArrayList<LinkedHashMap<String, Object>> date1 = jdbc.select("date", select, condition);
+        if (!date1.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

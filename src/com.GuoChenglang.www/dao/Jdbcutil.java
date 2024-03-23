@@ -132,7 +132,7 @@ public class Jdbcutil implements JdbcutilImpl {
             result.add(newMap);
         }
         pool.returnConnection(conn);
-        pool.releaseAll(conn, pre, resultSet);
+        pool.releaseAll(null, pre, resultSet);
         return result;
 
     }

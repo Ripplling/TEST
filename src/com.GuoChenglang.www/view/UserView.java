@@ -2,8 +2,10 @@ package view;
 
 import controller.LogIn;
 import controller.SignIn;
+import controller.UserController;
 import dao.Jdbcutil;
 import pojo.User;
+import services.impl.UserService;
 import util.Determind;
 
 import java.sql.SQLException;
@@ -51,18 +53,23 @@ public class UserView {
             System.out.println("欢迎你" + user.getName());
             System.out.println("1.查看个人信息");
             System.out.println("2.预约挂号");
-            System.out.println("3.查看挂号记录");
-            System.out.println("4.退出");
+            System.out.println("3.查看预约信息");
+            System.out.println("4.查看挂号记录");
+            System.out.println("5.退出");
             String keyHit = sc.nextLine();
             switch (keyHit) {
                 case "1" -> {
                     firstMenu(user);
                 }
                 case "2" -> {
+                    secondMenu(user);
                 }
                 case "3" -> {
                 }
                 case "4" -> {
+
+                }
+                case "5" -> {
                     isBreak = true;
                 }
                 default -> {
@@ -88,7 +95,7 @@ public class UserView {
                     while (true) {
                         if (user.getPhone() != null) {
                             System.out.println("请输入新的的手机号");
-                        }else {
+                        } else {
                             System.out.println("请完善你的手机号");
                         }
                         String newphone = sc.nextLine();
@@ -117,7 +124,36 @@ public class UserView {
             }
         }
     }
-    public static void secondMenu(User user){
 
+    public static void secondMenu(User user) throws SQLException {
+        UserService userService = new UserService();
+        boolean isOder = userService.isOder(user);
+        if (isOder) {
+            System.out.println("你已经预约了");
+        } else {
+            Scanner sc = new Scanner(System.in);
+            UserController userController = new UserController();
+            boolean isFree = userController.printFree();
+            while (isFree) {
+                System.out.println("请选择你要预约的医生的房间号");
+                String room = sc.nextLine();
+                boolean isTrue = userController.printDate(room);
+                if (isTrue) {
+                    System.out.println("请输入预约的时间段");
+                    while (true) {
+                        String date = sc.nextLine();
+                        boolean isDate = userService.isDate(room, date);
+                        if (isDate) {
+                            userService.selectDoc(user, room, date);
+                            break;
+                        } else {
+                            System.out.println("时间段错误，请重新输入");
+                        }
+
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

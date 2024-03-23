@@ -15,7 +15,7 @@ public class DocIsFree {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("room", room);
         ArrayList<LinkedHashMap<String, Object>> date1 = jdbc.select("date", date, condition);
-        if (date1.size() == 1) {
+        if (date1.isEmpty()) {
             return false;
         } else {
             return true;
