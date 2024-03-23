@@ -19,6 +19,7 @@ public class UserController {
 
     //打印就诊记录
     public void printPatient(User user) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         String name = user.getName();
         String id = user.getId();
         ArrayList<String> select = new ArrayList<>();
@@ -31,7 +32,7 @@ public class UserController {
         condition.put("complete", 1);
         condition.put("name", name);
         condition.put("ID", id);
-        ArrayList<LinkedHashMap<String, Object>> patient = Jdbcutil.select("patient", select, condition);
+        ArrayList<LinkedHashMap<String, Object>> patient = jdbc.select("patient", select, condition);
         if (patient.isEmpty()) {
             System.out.println("没有挂号信息");
         } else {
@@ -41,12 +42,13 @@ public class UserController {
 
     //打印空闲可挂号医生的信息
     public boolean printFree() throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         ArrayList<String> select = new ArrayList<>();
         select.add("name");
         select.add("room");
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("isfree", 1);
-        ArrayList<LinkedHashMap<String, Object>> doctor = Jdbcutil.select("doctor", select, condition);
+        ArrayList<LinkedHashMap<String, Object>> doctor = jdbc.select("doctor", select, condition);
         if (doctor.isEmpty()) {
             System.out.println("当前无空闲医生");
             return false;
@@ -59,11 +61,12 @@ public class UserController {
 
     //打印该房号空闲的时间段
     public boolean printDate(String room) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         ArrayList<String> select = new ArrayList<>();
         select.add("date");
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("room", room);
-        ArrayList<LinkedHashMap<String, Object>> date = Jdbcutil.select("date", select, condition);
+        ArrayList<LinkedHashMap<String, Object>> date = jdbc.select("date", select, condition);
         if (date.isEmpty()) {
             System.out.println("没有该房间号");
             return false;

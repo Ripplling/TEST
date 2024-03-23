@@ -20,6 +20,7 @@ public class UserService implements UserControl {
 
     //选择就诊医生
     public void selectDoc(User user, String room, String date) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         String name = user.getName();
         String id = user.getId();
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
@@ -29,15 +30,15 @@ public class UserService implements UserControl {
         comfort.put("room", room);
         comfort.put("complete", 0);
         comfort.put("date", date);
-        Jdbcutil.insert("patient", comfort,false);
+        jdbc.insert("patient", comfort,false);
         comfort2.put("room", room);
-        Jdbcutil.delect("date", comfort2,false);
+        jdbc.delect("date", comfort2,false);
         if (!DocIsFree.docIsFree(room)) {
             LinkedHashMap<String, Object> set = new LinkedHashMap<>();
             LinkedHashMap<String, Object> docRoom = new LinkedHashMap<>();
             set.put("isfree", 0);
             docRoom.put("room", room);
-            Jdbcutil.update( "doctor", set, docRoom,false);
+            jdbc.update( "doctor", set, docRoom,false);
         }
         System.out.println("选择成功");
     }

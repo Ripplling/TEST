@@ -7,8 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class SqlBuilder {
-    public static String insertSql(String table, LinkedHashMap<String, Object> comfort) throws SQLException {
+public class SqlBuilder implements SqlBuilderImpl {
+    public SqlBuilder() {
+    }
+
+    @Override
+    public String insertSql(String table, LinkedHashMap<String, Object> comfort) {
         //构建sql语句
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         //插入目标表
@@ -38,13 +42,12 @@ public class SqlBuilder {
             }
             sql.append("?,");
         }
-        count = 1;
-        keys = comfort.keySet();
         return String.valueOf(sql);
 
     }
 
-    public static String deleteSql(String table, LinkedHashMap<String, Object> condition) {
+    @Override
+    public String deleteSql(String table, LinkedHashMap<String, Object> condition) {
         //构建sql语句
         StringBuilder sql = new StringBuilder("DELETE FROM ");
         sql.append(table).append(" WHERE (");
@@ -67,7 +70,8 @@ public class SqlBuilder {
         return String.valueOf(sql);
     }
 
-    public static String updateSql(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) {
+    @Override
+    public String updateSql(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition) {
         //构建sql语句
         StringBuilder sql = new StringBuilder("UPDATE ");
         sql.append(table).append(" SET ");
@@ -107,7 +111,8 @@ public class SqlBuilder {
         return String.valueOf(sql);
     }
 
-    public static String selectSql(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) {
+    @Override
+    public String selectSql(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) {
         StringBuilder sql = new StringBuilder("SELECT ");
         //sql语句的构建
         int index = 0;

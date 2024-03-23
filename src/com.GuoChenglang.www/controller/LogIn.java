@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class LogIn {
     public static User logIn() throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入账号");
         String name = sc.nextLine();
@@ -30,7 +31,7 @@ public class LogIn {
         conditon.put("password", password);
         conditon.put("istrue", 1);
         //ResultSet result = Jdbc.executeQuery("SELECT * FROM user WHERE username = '" + name + "'&& password = '" + password + "'&& istrue = 1");
-        ArrayList<LinkedHashMap<String, Object>> result = Jdbcutil.select("user", select, conditon);
+        ArrayList<LinkedHashMap<String, Object>> result = jdbc.select("user", select, conditon);
         if (!result.isEmpty()) {
             System.out.println("登录成功");
         } else {

@@ -13,7 +13,7 @@ public class test {
         //map.put("username","guochenglang");
         LinkedHashMap<String,Object> con = new LinkedHashMap<>();
         con.put("id","3214");
-        System.out.println(SqlBuilder.insertSql("username",con));
+        //System.out.println(SqlBuilder.insertSql("username",con));
 
     }
 }

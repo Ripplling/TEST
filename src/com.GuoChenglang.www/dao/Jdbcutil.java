@@ -8,10 +8,15 @@ import java.sql.SQLException;
 import java.util.*;
 
 //Jdbc的详细封装(insert,update,delete,select)（不是很会a）
-public class Jdbcutil {
+public class Jdbcutil implements JdbcutilImpl {
+    public Jdbcutil() {
+    }
+
+    @Override
     //插入医生的信息
-    public static int insert(String table, LinkedHashMap<String, Object> comfort,boolean affair) throws SQLException {
-        String sql = SqlBuilder.insertSql(table, comfort);
+    public int insert(String table, LinkedHashMap<String, Object> comfort, boolean affair) throws SQLException {
+        SqlBuilder sqlBuilder = new SqlBuilder();
+        String sql = sqlBuilder.insertSql(table, comfort);
         //System.out.println(sql);
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
@@ -24,19 +29,20 @@ public class Jdbcutil {
             pre.setObject(count, value);
             count++;
         }
-        if(affair){
+        if (affair) {
             conn.setAutoCommit(false);
         }
         int num = pre.executeUpdate();
-        Affair.startAffair(conn,affair);
+        Affair.startAffair(conn, affair);
         pool.returnConnection(conn);
-        pool.releaseAll(null,pre,null);
+        pool.releaseAll(null, pre, null);
         return num;
     }
 
-
-    public static int delect(String table, LinkedHashMap<String, Object> condition,boolean affair) throws SQLException {
-        String sql = SqlBuilder.deleteSql(table, condition);
+    @Override
+    public int delect(String table, LinkedHashMap<String, Object> condition, boolean affair) throws SQLException {
+        SqlBuilder sqlBuilder = new SqlBuilder();
+        String sql = sqlBuilder.deleteSql(table, condition);
         System.out.println(sql);
         int count = 1;
         ConnectManager pool = new ConnectManager();
@@ -49,20 +55,22 @@ public class Jdbcutil {
             pre.setObject(count, value);
             count++;
         }
-        if(affair){
+        if (affair) {
             conn.setAutoCommit(false);
         }
         //回收资源
         int num = pre.executeUpdate();
-        Affair.startAffair(conn,affair);
+        Affair.startAffair(conn, affair);
         pool.returnConnection(conn);
-        pool.releaseAll(null,pre,null);
+        pool.releaseAll(null, pre, null);
         return num;
     }
 
+    @Override
     //自定义sql语句，通过键值对应来赋值
-    public static int update(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition,boolean affair) throws SQLException {
-        String sql = SqlBuilder.updateSql(table, set, condition);
+    public int update(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition, boolean affair) throws SQLException {
+        SqlBuilder sqlBuilder = new SqlBuilder();
+        String sql = sqlBuilder.updateSql(table, set, condition);
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();
         PreparedStatement pre = conn.prepareStatement(sql.toString());
@@ -81,19 +89,20 @@ public class Jdbcutil {
             count++;
         }
         //System.out.println(sql);
-        if(affair){
+        if (affair) {
             conn.setAutoCommit(false);
         }
         int num = pre.executeUpdate();
-        Affair.startAffair(conn,affair);
+        Affair.startAffair(conn, affair);
         pool.returnConnection(conn);
-        pool.releaseAll(null,pre,null);
+        pool.releaseAll(null, pre, null);
         return num;
     }
 
-
-    public static ArrayList<LinkedHashMap<String, Object>> select(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) throws SQLException {
-        String sql = SqlBuilder.selectSql(table, select, condition);
+    @Override
+    public ArrayList<LinkedHashMap<String, Object>> select(String table, ArrayList<String> select, LinkedHashMap<String, Object> condition) throws SQLException {
+        SqlBuilder sqlBuilder = new SqlBuilder();
+        String sql = sqlBuilder.selectSql(table, select, condition);
         //打印sql语句查验
         //System.out.println(sql);
         //从连接池获取连接

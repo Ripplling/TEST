@@ -12,12 +12,13 @@ public class AdminController {
 
     //打印待审核的学生信息
     public boolean temporarily() throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         ArrayList<String> select = new ArrayList<>();
         select.add("name");
         select.add("id");
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
         map.put("istrue", "2");
-        ArrayList<LinkedHashMap<String, Object>> result = Jdbcutil.select("user", select, map);
+        ArrayList<LinkedHashMap<String, Object>> result = jdbc.select("user", select, map);
         if (result.isEmpty()) {
             System.out.println("没有学生信息");
             return false;

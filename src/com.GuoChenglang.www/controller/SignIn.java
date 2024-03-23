@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class SignIn {
     public static void signIn() throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         Scanner sc = new Scanner(System.in);
         String account = null;
         while (true) {
@@ -51,7 +52,7 @@ public class SignIn {
         map.put("name", name);
         map.put("id", id);
         map.put("istrue", 2);
-        Jdbcutil.insert("user",map,true);
+        jdbc.insert("user",map,true);
 
 
         System.out.println("注册已提交，请等待管理员审核");

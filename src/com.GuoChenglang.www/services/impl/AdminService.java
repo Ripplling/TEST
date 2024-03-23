@@ -19,41 +19,45 @@ public class AdminService implements AdminControl {
     //通过传入ID同意学生进行注册
     @Override
     public void acceptStudent(String id) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> set = new LinkedHashMap<>();
         //同意注册
         set.put("istrue", 1);
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
         condition.put("id", id);
-        Jdbcutil.update("user", set, condition,true);
+        jdbc.update("user", set, condition,true);
     }
 
     //不同意非法的学生
     @Override
     public void rejectStudent(String id) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", 2);
         condition.put("id", id);
-        Jdbcutil.delect("user", condition,true);
+        jdbc.delect("user", condition,true);
     }
 
     //插入医生信息
     @Override
     public void insertDoc(String name, String room) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("name", name);
         comfort.put("room", room);
         comfort.put("isfree", 1);
-        Jdbcutil.insert("doctor", comfort,true);
+        jdbc.insert("doctor", comfort,true);
     }
 
     //插入时间段
     @Override
     public void inserDocDate(String date, String room) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("date", date);
         comfort.put("room", room);
-        Jdbcutil.insert("date", comfort,true);
+        jdbc.insert("date", comfort,true);
     }
 
 }
