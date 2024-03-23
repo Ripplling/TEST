@@ -24,6 +24,7 @@ public class LogIn {
         select.add("username");
         select.add("password");
         select.add("phone");
+        select.add("name");
         select.add("id");
         select.add("istrue");
         LinkedHashMap<String, Object> conditon = new LinkedHashMap<>();

@@ -13,14 +13,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", phone='" + phone + '\'' +
-                ", name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", istrue=" + istrue +
-                '}';
+        String informate = "用户名："+username+",  电话:"+phone+",  姓名："+name+",  学号："+id;
+        return informate;
     }
 
     public String getUsername() {
