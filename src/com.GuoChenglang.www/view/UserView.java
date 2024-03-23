@@ -65,6 +65,7 @@ public class UserView {
                     secondMenu(user);
                 }
                 case "3" -> {
+                    thirdMenu(user);
                 }
                 case "4" -> {
 
@@ -153,6 +154,35 @@ public class UserView {
                     }
                     break;
                 }
+            }
+        }
+    }
+
+    public static void thirdMenu(User user) throws SQLException {
+        UserController userController = new UserController();
+        UserService userService = new UserService();
+        userController.printOder(user);
+        boolean isBreak = false;
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("1.取消该预约");
+            System.out.println("2.返回");
+            String keyHit = sc.nextLine();
+            switch (keyHit) {
+                case "1" -> {
+                    userService = new UserService();
+                    userService.deleteOder(user);
+                    isBreak = true;
+                }
+                case "2" -> {
+                    isBreak = true;
+                }
+                default -> {
+                    System.out.println("非法字符，请重新输入");
+                }
+            }
+            if(isBreak){
+                break;
             }
         }
     }

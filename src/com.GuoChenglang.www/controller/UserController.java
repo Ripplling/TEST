@@ -40,6 +40,29 @@ public class UserController {
         }
     }
 
+    //打印预约课室信息
+    public void printOder(User user) throws SQLException {
+        Jdbcutil jdbc = new Jdbcutil();
+        String name = user.getName();
+        String id = user.getId();
+        ArrayList<String> select = new ArrayList<>();
+        select.add("name");
+        select.add("ID");
+        //select.add("yourdoc");
+        select.add("room");
+        select.add("date");
+        LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
+        condition.put("complete", 0);
+        condition.put("name", name);
+        condition.put("ID", id);
+        ArrayList<LinkedHashMap<String, Object>> patient = jdbc.select("patient", select, condition);
+        if (patient.isEmpty()) {
+            System.out.println("没有预约信息");
+        } else {
+            System.out.println(patient);
+        }
+    }
+
     //打印空闲可挂号医生的信息
     public boolean printFree() throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
