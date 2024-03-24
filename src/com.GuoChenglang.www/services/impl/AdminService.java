@@ -1,14 +1,9 @@
 package services.impl;
 
-import dao.Affair;
-import dao.ConnectManager;
-import dao.Jdbc;
 import dao.Jdbcutil;
 import services.AdminControl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class AdminService implements AdminControl {
@@ -18,7 +13,7 @@ public class AdminService implements AdminControl {
 
     //通过传入ID同意学生进行注册
     @Override
-    public void acceptStudent(String id) throws SQLException {
+    public int acceptStudent(String id) throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> set = new LinkedHashMap<>();
         //同意注册
@@ -26,17 +21,18 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
         condition.put("id", id);
-        jdbc.update("user", set, condition,true);
+        return jdbc.update("user", set, condition,true);
     }
 
     //不同意非法的学生
     @Override
-    public void rejectStudent(String id) throws SQLException {
+    public int rejectStudent(String id) throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", 2);
         condition.put("id", id);
         jdbc.delect("user", condition,true);
+        return jdbc.delect("user", condition,true);
     }
 
     //插入医生信息
