@@ -68,7 +68,7 @@ public class UserView {
                     thirdMenu(user);
                 }
                 case "4" -> {
-
+                    forthMenu(user);
                 }
                 case "5" -> {
                     isBreak = true;
@@ -185,5 +185,9 @@ public class UserView {
                 break;
             }
         }
+    }
+    public static void forthMenu(User user) throws SQLException {
+        UserController userController = new UserController();
+        userController.printPatient(user);
     }
 }
