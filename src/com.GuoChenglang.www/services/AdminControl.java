@@ -7,7 +7,7 @@ public interface AdminControl {
 
     int rejectStudent(String id) throws SQLException;
 
-    void insertDoc(String name, String room) throws SQLException;
+    int insertDoc(String name, String room) throws SQLException;
 
-    void inserDocDate(String date, String room) throws SQLException;
+    int inserDocDate(String date, String room) throws SQLException;
 }

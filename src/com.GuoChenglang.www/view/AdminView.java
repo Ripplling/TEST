@@ -12,20 +12,18 @@ public class AdminView {
         Scanner sc = new Scanner(System.in);
         boolean isBreak = false;
         while (true) {
-            System.out.println("1.查看为审核学生");
+            System.out.println("1.查看未审核学生");
             System.out.println("2.添加医生");
-            System.out.println("3.查看就诊记录");
-            System.out.println("4.退出");
+            System.out.println("3.退出");
             String keyHit = sc.nextLine();
             switch (keyHit) {
                 case "1" -> {
                     firstMenu();
                 }
                 case "2" -> {
+                    secondMenu();
                 }
                 case "3" -> {
-                }
-                case "4" -> {
                     isBreak = true;
                 }
                 default -> {
@@ -94,7 +92,22 @@ public class AdminView {
         }
     }
 
-    public static void secondMenu(){
+    public static void secondMenu() throws SQLException {
+        AdminService adminService = new AdminService();
+        Scanner sc = new Scanner(System.in);
+        String name = null;
+        String room = null;
+        String date = null;
+
+        System.out.println("请输入医生的姓名");
+        name = sc.nextLine();
+        System.out.println("请输入医生的科室");
+        room = sc.nextLine();
+        adminService.insertDoc(name, room);
+        System.out.println("请输入医生的时间");
+        date = sc.nextLine();
+        adminService.inserDocDate(date, room);
+
 
     }
 }

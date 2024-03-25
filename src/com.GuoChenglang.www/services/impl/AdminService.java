@@ -37,23 +37,23 @@ public class AdminService implements AdminControl {
 
     //插入医生信息
     @Override
-    public void insertDoc(String name, String room) throws SQLException {
+    public int insertDoc(String name, String room) throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("name", name);
         comfort.put("room", room);
         comfort.put("isfree", 1);
-        jdbc.insert("doctor", comfort,true);
+        return jdbc.insert("doctor", comfort,true);
     }
 
     //插入时间段
     @Override
-    public void inserDocDate(String date, String room) throws SQLException {
+    public int inserDocDate(String date, String room) throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("date", date);
         comfort.put("room", room);
-        jdbc.insert("date", comfort,true);
+        return jdbc.insert("date", comfort,true);
     }
 
 }
