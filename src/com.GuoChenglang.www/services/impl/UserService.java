@@ -113,10 +113,10 @@ public class UserService implements UserControl {
         updateSet.put("isfree", 1);
         LinkedHashMap<String, Object> updateCondition = new LinkedHashMap<>();
         updateCondition.put("room", room);
-        jdbc.update("doctor", updateSet, updateCondition,false);
-        LinkedHashMap<String,Object> insertInfort = new LinkedHashMap<>();
-        insertInfort.put("date",date);
-        insertInfort.put("room",room);
-        jdbc.insert("date",insertInfort,false);
+        jdbc.update("doctor", updateSet, updateCondition, false);
+        LinkedHashMap<String, Object> insertInfort = new LinkedHashMap<>();
+        insertInfort.put("date", date);
+        insertInfort.put("room", room);
+        jdbc.insert("date", insertInfort, false);
     }
 }

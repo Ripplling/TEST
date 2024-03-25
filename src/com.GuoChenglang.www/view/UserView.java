@@ -181,11 +181,12 @@ public class UserView {
                     System.out.println("非法字符，请重新输入");
                 }
             }
-            if(isBreak){
+            if (isBreak) {
                 break;
             }
         }
     }
+
     public static void forthMenu(User user) throws SQLException {
         UserController userController = new UserController();
         userController.printPatient(user);

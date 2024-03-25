@@ -21,7 +21,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
         condition.put("id", id);
-        return jdbc.update("user", set, condition,true);
+        return jdbc.update("user", set, condition, true);
     }
 
     //不同意非法的学生
@@ -31,8 +31,8 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", 2);
         condition.put("id", id);
-        jdbc.delect("user", condition,true);
-        return jdbc.delect("user", condition,true);
+        jdbc.delect("user", condition, true);
+        return jdbc.delect("user", condition, true);
     }
 
     //插入医生信息
@@ -43,7 +43,7 @@ public class AdminService implements AdminControl {
         comfort.put("name", name);
         comfort.put("room", room);
         comfort.put("isfree", 1);
-        return jdbc.insert("doctor", comfort,true);
+        return jdbc.insert("doctor", comfort, true);
     }
 
     //插入时间段
@@ -53,7 +53,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> comfort = new LinkedHashMap<>();
         comfort.put("date", date);
         comfort.put("room", room);
-        return jdbc.insert("date", comfort,true);
+        return jdbc.insert("date", comfort, true);
     }
 
 }

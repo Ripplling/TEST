@@ -13,7 +13,7 @@ public class User {
 
     @Override
     public String toString() {
-        String informate = "用户名："+username+",  电话:"+phone+",  姓名："+name+",  学号："+id;
+        String informate = "用户名：" + username + ",  电话:" + phone + ",  姓名：" + name + ",  学号：" + id;
         return informate;
     }
 

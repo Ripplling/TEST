@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class WriteUtil {
-    public static String writeUtil(LinkedHashMap<String, Object> patient){
+    public static String writeUtil(LinkedHashMap<String, Object> patient) {
         String name = null;
         String id = null;
         String room = null;

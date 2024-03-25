@@ -52,7 +52,7 @@ public class SignIn {
         map.put("name", name);
         map.put("id", id);
         map.put("istrue", 2);
-        jdbc.insert("user",map,true);
+        jdbc.insert("user", map, true);
         System.out.println("注册已提交，请等待管理员审核");
     }
 }
