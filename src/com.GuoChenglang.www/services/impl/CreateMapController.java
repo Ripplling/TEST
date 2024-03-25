@@ -4,8 +4,8 @@ import controller.CreateMap;
 
 import java.util.Timer;
 
-public class CreatMap {
-    public CreatMap() {
+public class CreateMapController {
+    public CreateMapController() {
     }
     public void creatMap(){
         //每24小时生成就诊记录表

@@ -1,14 +1,19 @@
 package view;
 
 import controller.AdminController;
+import controller.CreateMap;
 import services.AdminControl;
 import services.impl.AdminService;
+import services.impl.CreateMapController;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AdminView {
     public static void majioMenu() throws SQLException {
+        CreateMapController createMapController = new CreateMapController();
+        createMapController.creatMap();
+
         Scanner sc = new Scanner(System.in);
         boolean isBreak = false;
         while (true) {
