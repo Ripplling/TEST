@@ -16,6 +16,7 @@ public class Jdbcutil implements JdbcutilImpl {
     //插入医生的信息
     public int insert(String table, LinkedHashMap<String, Object> comfort, boolean affair) throws SQLException {
         SqlBuilder sqlBuilder = new SqlBuilder();
+        //通过sql的构建器获得sql语句
         String sql = sqlBuilder.insertSql(table, comfort);
         //System.out.println(sql);
         ConnectManager pool = new ConnectManager();
@@ -34,6 +35,7 @@ public class Jdbcutil implements JdbcutilImpl {
         }
         int num = pre.executeUpdate();
         Affair.startAffair(conn, affair);
+        //释放资源
         pool.returnConnection(conn);
         pool.releaseAll(null, pre, null);
         return num;
@@ -42,6 +44,7 @@ public class Jdbcutil implements JdbcutilImpl {
     @Override
     public int delect(String table, LinkedHashMap<String, Object> condition, boolean affair) throws SQLException {
         SqlBuilder sqlBuilder = new SqlBuilder();
+        //通过sql构建器获得sql语句
         String sql = sqlBuilder.deleteSql(table, condition);
         System.out.println(sql);
         int count = 1;
@@ -70,6 +73,7 @@ public class Jdbcutil implements JdbcutilImpl {
     //自定义sql语句，通过键值对应来赋值
     public int update(String table, LinkedHashMap<String, Object> set, LinkedHashMap<String, Object> condition, boolean affair) throws SQLException {
         SqlBuilder sqlBuilder = new SqlBuilder();
+        //通过sql构建器获得sql语句
         String sql = sqlBuilder.updateSql(table, set, condition);
         ConnectManager pool = new ConnectManager();
         Connection conn = pool.getConnection();

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
+//用户登录注册菜单
 public class UserView {
     public static void initMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -46,6 +47,7 @@ public class UserView {
         }
     }
 
+    //注册完后进入主菜单
     public static void majorMenu(User user) throws SQLException {
         Scanner sc = new Scanner(System.in);
         boolean isBreak = false;
@@ -83,6 +85,7 @@ public class UserView {
         }
     }
 
+    //第一个菜单
     public static void firstMenu(User user) throws SQLException {
         Scanner sc = new Scanner(System.in);
         boolean isBreak = false;
@@ -93,6 +96,7 @@ public class UserView {
             String keyHit = sc.nextLine();
             switch (keyHit) {
                 case "1" -> {
+                    //完善个人信息
                     while (true) {
                         if (user.getPhone() != null) {
                             System.out.println("请输入新的的手机号");
@@ -126,12 +130,15 @@ public class UserView {
         }
     }
 
+    //第二个菜单
     public static void secondMenu(User user) throws SQLException {
         UserService userService = new UserService();
+        //是否进行了预约，并进行判断
         boolean isOder = userService.isOder(user);
         if (isOder) {
             System.out.println("你已经预约了");
         } else {
+            //未预约
             Scanner sc = new Scanner(System.in);
             UserController userController = new UserController();
             boolean isFree = userController.printFree();
@@ -158,6 +165,7 @@ public class UserView {
         }
     }
 
+    //第三个菜单
     public static void thirdMenu(User user) throws SQLException {
         UserController userController = new UserController();
         UserService userService = new UserService();
@@ -170,6 +178,7 @@ public class UserView {
             String keyHit = sc.nextLine();
             switch (keyHit) {
                 case "1" -> {
+                    //执行取消预约的方法
                     userService = new UserService();
                     userService.deleteOder(user);
                     isBreak = true;
@@ -187,6 +196,7 @@ public class UserView {
         }
     }
 
+    //第四个菜单，执行查看记录的方法
     public static void forthMenu(User user) throws SQLException {
         UserController userController = new UserController();
         userController.printPatient(user);

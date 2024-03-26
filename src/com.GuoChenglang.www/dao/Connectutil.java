@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//连接池的接口
 public interface Connectutil {
     Connection getConnection();
 
@@ -18,5 +19,6 @@ public interface Connectutil {
     int getInitInformate();
 
     int getMaxInformate();
-    void rebuild(int init,int max) throws SQLException;
+
+    void rebuild(int init, int max) throws SQLException;
 }

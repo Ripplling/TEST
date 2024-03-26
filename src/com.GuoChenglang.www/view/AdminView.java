@@ -10,6 +10,7 @@ import services.impl.CreateMapController;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+//管理员菜单
 public class AdminView {
     public static void majioMenu() throws SQLException {
         CreateMapController createMapController = new CreateMapController();
@@ -48,6 +49,7 @@ public class AdminView {
         }
     }
 
+    //第一个菜单
     public static void firstMenu() throws SQLException {
         Scanner sc = new Scanner(System.in);
         String keyHit = null;
@@ -104,6 +106,7 @@ public class AdminView {
         }
     }
 
+    //第二个菜单
     public static void secondMenu() throws SQLException {
         AdminService adminService = new AdminService();
         Scanner sc = new Scanner(System.in);
@@ -123,6 +126,7 @@ public class AdminView {
 
     }
 
+    //第四个菜单
     public static void forthMenu() throws SQLException {
         ConnectManager connectManager = new ConnectManager();
         Scanner sc = new Scanner(System.in);
@@ -140,6 +144,7 @@ public class AdminView {
                 break;
             }
         }
+        //执行方法
         connectManager.rebuild(init, max);
     }
 }

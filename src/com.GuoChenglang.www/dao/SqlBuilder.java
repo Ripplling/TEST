@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+//sql构建器
 public class SqlBuilder implements SqlBuilderImpl {
     public SqlBuilder() {
     }

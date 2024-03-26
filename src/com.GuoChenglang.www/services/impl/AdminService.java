@@ -16,7 +16,7 @@ public class AdminService implements AdminControl {
     public int acceptStudent(String id) throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         LinkedHashMap<String, Object> set = new LinkedHashMap<>();
-        //同意注册
+        //同意注册，将2变为1
         set.put("istrue", 1);
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", "2");
@@ -31,6 +31,7 @@ public class AdminService implements AdminControl {
         LinkedHashMap<String, Object> condition = new LinkedHashMap<>();
         condition.put("istrue", 2);
         condition.put("id", id);
+        //删除当前学号的注册信息
         jdbc.delect("user", condition, true);
         return jdbc.delect("user", condition, true);
     }

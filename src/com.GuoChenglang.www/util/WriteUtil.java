@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class WriteUtil {
+    //构建写入信息
     public static String writeUtil(LinkedHashMap<String, Object> patient) {
         String name = null;
         String id = null;
@@ -24,7 +25,6 @@ public class WriteUtil {
                 room = (String) patient.get(key);
             }
         }
-        String prepareWrite = new StringBuilder().append("姓名：").append(name).append("  学号：").append(id).append("  时间").append(date).append("  科室").append(room).append("\r\n").toString();
-        return prepareWrite;
+        return "姓名：" + name + "  学号：" + id + "  时间" + date + "  科室" + room + "\r\n";
     }
 }

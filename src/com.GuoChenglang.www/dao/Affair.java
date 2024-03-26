@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Affair {
     public static void startAffair(Connection conn, boolean start) throws SQLException {
+        //通过start的boolean值判断是否开启事务
         if (start) {
             conn.setAutoCommit(false);
             //System.out.println("你同意吗");

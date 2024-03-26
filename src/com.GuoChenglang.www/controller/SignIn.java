@@ -9,12 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-
+//注册操作的方法
 public class SignIn {
     public static void signIn() throws SQLException {
         Jdbcutil jdbc = new Jdbcutil();
         Scanner sc = new Scanner(System.in);
         String account = null;
+        //对输入的账号进行非重复操作
         while (true) {
             System.out.println("请输入注册的账号");
             account = sc.nextLine();
@@ -24,6 +25,7 @@ public class SignIn {
             System.out.println("该账号已经存在，请重新输入");
         }
         String password = null;
+        //对输入的密码进行非空操作
         while (true) {
             System.out.println("请输入注册的密码");
             password = sc.nextLine();
@@ -33,10 +35,12 @@ public class SignIn {
                 System.out.println("非法密码");
             }
         }
+        //对密码进行加密操作
         String secondPassword = Encryption.encryption(password);
         System.out.println("请输入你的姓名");
         String name = sc.nextLine();
         String id = null;
+        //对学号进行正则判断
         while (true) {
             System.out.println("请输入你的学号");
             id = sc.nextLine();
@@ -47,6 +51,7 @@ public class SignIn {
         }
         //Jdbc.executeUpdate("INSERT INTO user(username,password,name,id,istrue) VALUES('" + account + "','" + secondPassword + "','" + name + "','" + id + "',2) ");
         LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+        //插入进user表当中
         map.put("username", account);
         map.put("password", secondPassword);
         map.put("name", name);

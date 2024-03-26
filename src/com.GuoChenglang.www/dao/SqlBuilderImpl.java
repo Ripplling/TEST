@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+//sql构建器的接口
 public interface SqlBuilderImpl {
     String insertSql(String table, LinkedHashMap<String, Object> comfort);
 

@@ -3,7 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
+//jdbc的接口
 public interface JdbcutilImpl {
     int insert(String table, LinkedHashMap<String, Object> comfort, boolean affair) throws SQLException;
 
