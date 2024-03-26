@@ -2,6 +2,7 @@ package view;
 
 import controller.AdminController;
 import controller.CreateMap;
+import dao.ConnectManager;
 import services.AdminControl;
 import services.impl.AdminService;
 import services.impl.CreateMapController;
@@ -12,14 +13,16 @@ import java.util.Scanner;
 public class AdminView {
     public static void majioMenu() throws SQLException {
         CreateMapController createMapController = new CreateMapController();
+        ConnectManager connectManager = new ConnectManager();
         createMapController.creatMap();
-
         Scanner sc = new Scanner(System.in);
         boolean isBreak = false;
         while (true) {
+            System.out.println("当前连接池信息： 初始值：" + connectManager.getInitInformate() + ",最大值：" + connectManager.getMaxInformate());
             System.out.println("1.查看未审核学生");
             System.out.println("2.添加医生");
             System.out.println("3.退出");
+            System.out.println("4.设置连接池数");
             String keyHit = sc.nextLine();
             switch (keyHit) {
                 case "1" -> {
@@ -30,6 +33,10 @@ public class AdminView {
                 }
                 case "3" -> {
                     isBreak = true;
+                }
+                case "4" -> {
+                    forthMenu();
+
                 }
                 default -> {
                     System.out.println("非法字符，请重新输入");
@@ -114,5 +121,25 @@ public class AdminView {
         adminService.inserDocDate(date, room);
 
 
+    }
+
+    public static void forthMenu() throws SQLException {
+        ConnectManager connectManager = new ConnectManager();
+        Scanner sc = new Scanner(System.in);
+        int init;
+        int max;
+        System.out.println("当前连接池信息： 初始值：" + connectManager.getInitInformate() + ",最大值：" + connectManager.getMaxInformate());
+        while (true) {
+            System.out.println("请输入初始值");
+            init = Integer.parseInt(sc.nextLine());
+            System.out.println("请输入最大值");
+            max = Integer.parseInt(sc.nextLine());
+            if (init > max) {
+                System.out.println("初始值大于最大值，请重新输入");
+            } else {
+                break;
+            }
+        }
+        connectManager.rebuild(init, max);
     }
 }

@@ -9,6 +9,7 @@ import java.sql.Statement;
 public class ConnectManager implements Connectutil {
     private final ConnectPool pool = new ConnectPool();
 
+
     public ConnectManager() {
     }
 
@@ -30,6 +31,21 @@ public class ConnectManager implements Connectutil {
     @Override
     public void releaseAll(Connection conn, Statement state, ResultSet resultSet) {
         pool.releaseAll(conn, state, resultSet);
+    }
+
+    @Override
+    public int getInitInformate() {
+        return pool.getInitInformate();
+    }
+
+    @Override
+    public int getMaxInformate() {
+        return pool.getMaxInformate();
+    }
+
+    @Override
+    public void rebuild(int init, int max) throws SQLException {
+        pool.rebuild(init,max);
     }
 
 }

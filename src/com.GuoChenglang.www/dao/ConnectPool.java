@@ -18,6 +18,8 @@ public class ConnectPool implements Connectutil {
     public static int connection = 0;
     //配置文件对象生成
     static Config config = new Config();
+    //创建集合对象,初始化连接池（使用public是为了在test中打印集合）
+    public static LinkedList<Connection> arr = init(config);
 
     //数据库链接的初始化的方法
     static LinkedList<Connection> init(Config config) {
@@ -33,9 +35,16 @@ public class ConnectPool implements Connectutil {
         }
         return arr;
     }
-
-    //创建集合对象,初始化连接池（使用public是为了在test中打印集合）
-    public static LinkedList<Connection> arr = init(config);
+    //重置线程池初始线程数以及最大线程数
+    public void rebuild(int init, int max) throws SQLException {
+        config = new Config(init,max);
+        //关闭当前所有线程
+        for (int i = 0; i < arr.size(); i++) {
+            Connection conn = arr.get(i);
+            conn.close();
+        }
+        arr = init(config);
+    }
 
     //获取连接池链接的方法
     @Override
@@ -92,6 +101,15 @@ public class ConnectPool implements Connectutil {
     @Override
     public void releaseAll(Connection conn, Statement state, ResultSet resultSet) {
         Jdbc.releaseAll(conn, state, resultSet);
+    }
+    //获取当前线程信息
+    @Override
+    public int getInitInformate(){
+        return config.getInit();
+    }
+    @Override
+    public int getMaxInformate(){
+        return config.getMax();
     }
 
 

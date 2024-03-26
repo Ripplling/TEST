@@ -14,4 +14,9 @@ public interface Connectutil {
     void releaseConnection();
 
     void releaseAll(Connection conn, Statement state, ResultSet resultSet);
+
+    int getInitInformate();
+
+    int getMaxInformate();
+    void rebuild(int init,int max) throws SQLException;
 }
