@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TimerTask;
 
 public class CreateMap extends TimerTask {
+
     private static ArrayList<LinkedHashMap<String, Object>> nowPatient;
 
     @Override
@@ -23,7 +24,7 @@ public class CreateMap extends TimerTask {
         ArrayList<LinkedHashMap<String, Object>> newPatients = null;
         //生成表
         try {
-            writer = new FileWriter("C:\\Users\\23217\\Desktop\\javacode\\mypool\\src\\com.GuoChenglang.www\\common\\Patienttxt.txt");
+            writer = new FileWriter("src/com.GuoChenglang.www/resources/Patienttxt.txt");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
